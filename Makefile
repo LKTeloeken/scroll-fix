@@ -9,12 +9,14 @@ SWIFTC = swiftc -O -swift-version 5
 build: $(APP)
 
 # Universal binary, ad-hoc signed so macOS can track the Accessibility grant.
-$(APP): $(SOURCES) Resources/Info.plist Makefile
+$(APP): $(SOURCES) Resources/Info.plist Resources/AppIcon.icns Makefile
 	rm -rf $@
 	mkdir -p $@/Contents/MacOS
 	$(SWIFTC) -target arm64-apple-macos13 $(SOURCES) -o build/ScrollFix-arm64
 	$(SWIFTC) -target x86_64-apple-macos13 $(SOURCES) -o build/ScrollFix-x86_64
 	lipo -create build/ScrollFix-arm64 build/ScrollFix-x86_64 -output $@/Contents/MacOS/ScrollFix
+	mkdir -p $@/Contents/Resources
+	cp Resources/AppIcon.icns $@/Contents/Resources/
 	cp Resources/Info.plist $@/Contents/Info.plist
 	plutil -replace CFBundleShortVersionString -string $(VERSION) $@/Contents/Info.plist
 	plutil -replace CFBundleVersion -string $(VERSION) $@/Contents/Info.plist
