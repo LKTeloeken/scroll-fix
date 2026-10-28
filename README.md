@@ -31,6 +31,7 @@ With Homebrew:
 
 ```sh
 brew tap LKTeloeken/scroll-fix https://github.com/LKTeloeken/scroll-fix
+brew trust lkteloeken/scroll-fix   # recent Homebrew refuses untrusted third-party taps
 brew install --cask scroll-fix
 ```
 
